@@ -23,14 +23,14 @@ fn main() {
     let o : Option<String> = Some(String::from ("Hello world"));
     println! ("{:?}", o);
 
-    println! ("{}", value_int_cents(Coin::Penny));
-    println! ("{}", value_int_cents(Coin::Quarter(UsState::California)));
+    println! ("{}", value_int_cents (Coin::Penny));
+    println! ("{}", value_int_cents (Coin::Quarter (UsState::California)));
 
-    let five = Some(5);
+    let five = Some (5);
     println! ("{:?}", five);
-    let six = plus_one(five);
+    let six = plus_one (five);
     println! ("{:?}", six);
-    let none = plus_one(None);
+    let none = plus_one (None);
     println! ("{:?}", none);
 
     // matches are _exhaustive_ by default but Rust provides `_` as a catch-all arm
@@ -42,6 +42,22 @@ fn main() {
         7 => println! ("seven"),
         _ => (),
     }
+
+    let some_u8_val = Some(1u8);
+    // if-let control flow in place of a single match case
+    match some_u8_val {
+        Some (1) => println! ("one!"),
+        _ => println! ("not one!"),
+    }
+
+    // or better yet
+    let some_u8_val = Some(1u8);
+    if let Some (1) = some_u8_val {
+        println! ("one!");
+    } else {
+        println! ("not one!");
+    }
+
 }
 
 #[derive(Debug)]
@@ -52,7 +68,7 @@ enum DifferentStructs {
     ChangeColor (i32, i32, i32),
 }
 
-fn outside_call(d: &DifferentStructs) {
+fn outside_call (d: &DifferentStructs) {
     println! ("call invoked: {:?}", d);
 }
 
@@ -112,8 +128,8 @@ enum Coin {
     Quarter (UsState),
 }
 
-fn value_int_cents (c : Coin) -> u8 {
-    match c {
+fn value_int_cents (coin : Coin) -> u8 {
+    match coin {
         Coin::Penny => {
             println! ("penny, woo!");
             1
@@ -129,9 +145,9 @@ fn value_int_cents (c : Coin) -> u8 {
 
 // matching with Option<T>
 
-fn plus_one(o: Option<i32>) -> Option<i32> {
-    match o {
+fn plus_one (option: Option<i32>) -> Option<i32> {
+    match option {
         None => None,
-        Some(i) => Some(i + 1),
+        Some (i) => Some (i + 1),
     }
 }
